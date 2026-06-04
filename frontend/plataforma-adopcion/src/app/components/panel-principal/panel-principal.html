@@ -1,0 +1,29 @@
+<div class="catalogo-container">
+  <h1>Animales en adopción</h1>
+  <p>Encuentra a tu compañero ideal de nuestra base de datos local</p>
+    
+  <div class="grid-animales">
+    @for (animal of listaAnimales; track animal.id) {
+      <div class="card-animal">
+        <img [src]="animal.imagen_url" [alt]="animal.nombre" class="card-img">
+        <div class="card-body">
+          <div class="card-header-row">
+            <h3>{{ animal.nombre }}</h3>
+            <span class="badge-estado" 
+                  [ngClass]="{
+                    'badge-disponible': animal.estado === 'disponible',
+                    'badge-reservado': animal.estado === 'reservado',
+                    'badge-adoptado': animal.estado === 'adoptado'
+                  }">
+              {{ animal.estado }}
+            </span>
+          </div>
+          <p class="card-info-text">🐾 <strong>{{ animal.especie }}</strong> - {{ animal.raza }}</p>
+          <p class="card-info-text">🎂 Edad: {{ animal.edad }} | 📏 Tamaño: {{ animal.tamano }}</p>
+          <p class="card-descripcion">{{ animal.descripcion }}</p>
+          <a [routerLink]="['/animal', animal.id]" class="btn-conocer">Conocer a {{ animal.nombre }}</a>
+        </div>
+      </div>
+    }
+  </div>
+</div>

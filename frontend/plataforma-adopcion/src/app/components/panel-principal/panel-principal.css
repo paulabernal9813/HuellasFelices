@@ -1,0 +1,136 @@
+.catalogo-container {
+    padding: 30px 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.catalogo-container h1 {
+    color: #2c3e50;
+    margin-bottom: 5px;
+    font-size: 2.2rem;
+}
+
+.catalogo-container p {
+    color: #7f8c8d;
+    font-size: 1.05rem;
+    margin-bottom: 25px;
+}
+
+/* Alerta de carga */
+.loading-box {
+    padding: 20px;
+    background: #e3f2fd;
+    color: #0d47a1;
+    border-radius: 8px;
+    font-weight: 500;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(13, 71, 161, 0.1);
+}
+
+/* Rejilla de tarjetas (Responsive) */
+.grid-animales {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+/* Tarjeta del Animal */
+.card-animal {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    background: white;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-animal:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Imagen */
+.card-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+/* Cuerpo de la tarjeta */
+.card-body {
+    padding: 20px;
+}
+
+.card-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.card-header-row h3 {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 1.3rem;
+}
+
+/* Estados / Badges */
+.badge-estado {
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-disponible { background: #2ecc71; }
+.badge-reservado { background: #f39c12; }
+.badge-adoptado { background: #e74c3c; }
+
+/* Textos informativos */
+.card-info-text {
+    margin: 6px 0;
+    font-size: 0.95rem;
+    color: #5a6a85;
+}
+
+.card-descripcion {
+    font-size: 0.9rem;
+    color: #64748b;
+    line-height: 1.5;
+    height: 45px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 12px;
+}
+
+/* Botón Conocer */
+.btn-conocer {
+    display: block;
+    text-align: center;
+    background: #3498db;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    border-radius: 6px;
+    margin-top: 15px;
+    font-weight: 600;
+    transition: background 0.2s ease;
+}
+
+.btn-conocer:hover {
+    background: #2980b9;
+}
+
+/* Estado vacío */
+.empty-box {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 50px 20px;
+    color: #94a3b8;
+    font-size: 1.1rem;
+}
