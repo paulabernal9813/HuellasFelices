@@ -6,7 +6,7 @@
     @for (prot of listaProtectoras; track prot.id) {
       <div class="card-protectora">
         <div class="avatar-protectora">
-          🏢
+          <img [src]="prot.imagen_url || 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'" alt="Logo Protectora" class="img-lista-protectoras">
         </div>
         <div class="info-protectora">
           <h3>{{ prot.nombre }}</h3>
