@@ -1,12 +1,11 @@
 <?php
 
 // CABECERAS CORS: Cruciales para que Angular en Vercel pueda comunicarse con Render sin bloqueos
-header("Content-Type: application/json; charset=UTF-8");
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 
-// Si es una petición de tipo OPTIONS (pre-verificación del navegador), respondemos OK y cortamos
+// Si el navegador hace una petición de control (OPTIONS), respondemos OK y salimos
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit(0);
 }
