@@ -1,19 +1,12 @@
-<div class="protectoras-container">
-  <h1>Protectoras asociadas</h1>
-  <p>Conoce a las entidades locales que cuidan y protegen a nuestros peluditos</p>
-
-  <div class="grid-protectoras">
-    @for (prot of listaProtectoras; track prot.id) {
-      <div class="card-protectora">
-        <div class="avatar-protectora">
-          <img [src]="prot.imagen_url || 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'" alt="Logo Protectora" class="img-lista-protectoras">
-        </div>
-        <div class="info-protectora">
-          <h3>{{ prot.nombre }}</h3>
-          <p class="email">✉️ {{ prot.email }}</p>
-          <p class="fecha">📅 Miembro desde: {{ prot.created_at | date:'dd/MM/yyyy' }}</p>
-        </div>
+<div class="grid-protectoras">
+  @for (prot of listaProtectoras; track prot.id) {
+    <div class="card-protectora" [routerLink]="['/protectoras', prot.id]" style="cursor: pointer;">
+      <div class="avatar-protectora">🏢</div>
+      <div class="info-protectora">
+        <h3>{{ prot.nombre }}</h3>
+        <p class="email">✉️ {{ prot.email }}</p>
+        <p class="fecha">📅 Miembro desde: {{ prot.created_at | date:'dd/MM/yyyy' }}</p>
       </div>
-    }
-  </div>
+    </div>
+  }
 </div>

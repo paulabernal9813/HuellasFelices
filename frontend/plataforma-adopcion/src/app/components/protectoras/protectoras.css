@@ -86,3 +86,17 @@
     border-radius: 50%;
     border: 2px solid #3498db;
 }
+
+@media (max-width: 480px) {
+    .protectoras-container h1 {
+        font-size: 1.8rem;
+    }
+    .grid-protectoras {
+        grid-template-columns: 1fr;
+    }
+    .card-protectora {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px;
+    }
+}

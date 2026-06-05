@@ -20,7 +20,6 @@ export class UsuariosServices {
     });
     return this.http.post<any>(this.url, pa).pipe(
       tap((res) => {
-        // Si el login es correcto (no devuelve false), guardamos el usuario en el navegador
         if (res) {
           localStorage.setItem('usuario_logueado', JSON.stringify(res));
         }
@@ -59,7 +58,6 @@ export class UsuariosServices {
     return this.http.post<Usuario[]>(this.url, pa);
   }
 
-  // Métodos rápidos para gestionar la sesión activa en el Frontend
   getUsuarioActual(): Usuario | null {
     const user = localStorage.getItem('usuario_logueado');
     return user ? JSON.parse(user) : null;

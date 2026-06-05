@@ -1,0 +1,37 @@
+<div class="detalle-prot-container">
+  
+  <div class="ficha-protectora" *ngIf="datosProtectora">
+    <button routerLink="/protectoras" class="btn-volver-atras">⬅️ Volver al listado</button>
+    <div class="info-cabecera">
+      <div class="icono-grande">🏢</div>
+      <h1>{{ datosProtectora.nombre }}</h1>
+      <p class="correo">✉️ Contacto: <strong>{{ datosProtectora.email }}</strong></p>
+      <p class="badge-asociada">✓ Entidad Verificada</p>
+    </div>
+  </div>
+
+  <div class="seccion-animales-asociados">
+    <h2>🐾 Sus animales disponibles en adopción ({{ animalesEnAdopcion.length }})</h2>
+    
+    <div class="grid-animales-mini">
+      @for (animal of animalesEnAdopcion; track animal.id) {
+        <div class="tarjeta-animal-mini">
+          <div class="foto-wrapper">
+            <img [src]="animal.imagen_url || 'https://placehold.co/300x200'" alt="Foto mascota">
+            <span class="estado-tag" [attr.data-estado]="animal.estado">{{ animal.estado | uppercase }}</span>
+          </div>
+          <div class="cuerpo-tarjeta">
+            <h3>{{ animal.nombre }}</h3>
+            <p class="raza-edad">{{ animal.raza }} • {{ animal.edad }}</p>
+            <p class="desc">{{ animal.descripcion || 'Sin descripción facilitada.' }}</p>
+          </div>
+        </div>
+      } @empty {
+        <div class="aviso-vacio">
+          <p>💤 Actualmente esta protectora no tiene animales publicados en adopción activa.</p>
+        </div>
+      }
+    </div>
+  </div>
+
+</div>

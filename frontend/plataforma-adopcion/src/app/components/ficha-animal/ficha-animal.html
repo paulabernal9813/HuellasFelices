@@ -1,0 +1,59 @@
+<div class="ficha-animal-container">
+  
+  <button routerLink="/" class="btn-volver-atras">⬅️ Volver al catálogo</button>
+
+  @if (datosAnimal) {
+    <div class="tarjeta-ficha">
+      
+      <div class="ficha-imagen-wrapper">
+        <img [src]="datosAnimal.imagen_url || 'https://placehold.co/600x400'" alt="Foto de {{ datosAnimal.nombre }}">
+        <span class="badge-estado-ficha" [attr.data-estado]="datosAnimal.estado">
+          {{ datosAnimal.estado | uppercase }}
+        </span>
+      </div>
+
+      <div class="ficha-detalles">
+        <div class="encabezado-animal">
+          <h1>{{ datosAnimal.nombre }}</h1>
+          <p class="especie-raza">🐾 {{ datosAnimal.especie }} • {{ datosAnimal.raza }}</p>
+        </div>
+
+        <div class="grid-caracteristicas">
+          <div class="item-carac">
+            <span class="icono-carac">🎂</span>
+            <div class="textos-carac">
+              <label>Edad</label>
+              <strong>{{ datosAnimal.edad }}</strong>
+            </div>
+          </div>
+          <div class="item-carac">
+            <span class="icono-carac">📏</span>
+            <div class="textos-carac">
+              <label>Tamaño</label>
+              <strong>{{ datosAnimal.tamano }}</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="seccion-descripcion">
+          <h3>📖 Su Historia</h3>
+          <p>{{ datosAnimal.descripcion || 'Esta protectora no ha añadido ninguna descripción todavía. ¡Pregúntales directamente para conocer más sobre su personalidad!' }}</p>
+        </div>
+
+        <div class="caja-protectora-contacto">
+          <div class="titulo-contacto">🏢 Al cuidado de:</div>
+          <h4>{{ datosAnimal.nombre_usuario || datosAnimal.nombre }}</h4>
+          <p class="email-contacto">✉️ Correo de contacto: <strong>{{ datosAnimal.email_protectora }}</strong></p>
+          <p class="aviso-adopcion">💬 Si quieres adoptar o recibir más información sobre este peludito, escribe al correo electrónico superior indicando su nombre.</p>
+        </div>
+
+      </div>
+
+    </div>
+  } @else {
+    <div class="cargando-aviso">
+      <p>🔍 Buscando la información del animal en el servidor...</p>
+    </div>
+  }
+
+</div>

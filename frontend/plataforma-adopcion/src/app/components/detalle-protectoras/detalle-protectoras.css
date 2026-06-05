@@ -1,0 +1,156 @@
+.detalle-prot-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.ficha-protectora {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: 40px;
+}
+
+.btn-volver-atras {
+    background: none;
+    border: none;
+    color: #3498db;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+}
+
+.info-cabecera {
+    text-align: center;
+}
+
+.icono-grande {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+}
+
+.info-cabecera h1 {
+    margin: 5px 0;
+    color: #2c3e50;
+    font-size: 2.2rem;
+}
+
+.info-cabecera .correo {
+    color: #556b2f;
+    font-size: 1.1rem;
+}
+
+.badge-asociada {
+    display: inline-block;
+    background: #f0fdf4;
+    color: #166534;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    border: 1px solid #bbf7d0;
+}
+
+/* Grid de animales */
+.grid-animales-mini {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.tarjeta-animal-mini {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+}
+
+.foto-wrapper {
+    position: relative;
+    height: 180px;
+}
+
+.foto-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.estado-tag {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.estado-tag[data-estado="disponible"] {
+    background: #2ecc71;
+}
+
+.estado-tag[data-estado="adoptado"] {
+    background: #e74c3c;
+}
+
+.estado-tag[data-estado="reservado"] {
+    background: #f39c12;
+}
+
+.cuerpo-tarjeta {
+    padding: 15px;
+}
+
+.cuerpo-tarjeta h3 {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 1.3rem;
+}
+
+.raza-edad {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    margin: 5px 0 10px 0;
+    font-weight: 500;
+}
+
+.desc {
+    font-size: 0.9rem;
+    color: #475569;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;
+}
+
+.aviso-vacio {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #74808e;
+    padding: 4px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px dashed #cbd5e1;
+}
+
+@media (max-width: 600px) {
+    .ficha-protectora {
+        padding: 20px;
+    }
+    .info-cabecera h1 {
+        font-size: 1.7rem;
+    }
+    .grid-animales-mini {
+        grid-template-columns: 1fr;
+    }
+}

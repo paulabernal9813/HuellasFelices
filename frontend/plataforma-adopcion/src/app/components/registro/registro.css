@@ -65,7 +65,7 @@
 .btn-registro {
     width: 100%;
     padding: 13px;
-    background: #2ecc71; /* Un color verde que simboliza "crear/éxito" */
+    background: #2ecc71;
     color: white;
     border: none;
     border-radius: 8px;
@@ -115,4 +115,13 @@
 
 .registro-footer a:hover {
     text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .registro-card {
+        padding: 25px 20px;
+    }
+    .registro-header h2 {
+        font-size: 1.5rem;
+    }
 }

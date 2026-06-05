@@ -17,7 +17,6 @@
     margin-bottom: 25px;
 }
 
-/* Alerta de carga */
 .loading-box {
     padding: 20px;
     background: #e3f2fd;
@@ -28,7 +27,6 @@
     box-shadow: 0 2px 4px rgba(13, 71, 161, 0.1);
 }
 
-/* Rejilla de tarjetas (Responsive) */
 .grid-animales {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -36,7 +34,6 @@
     margin-top: 20px;
 }
 
-/* Tarjeta del Animal */
 .card-animal {
     border: 1px solid #e2e8f0;
     border-radius: 12px;
@@ -51,14 +48,12 @@
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-/* Imagen */
 .card-img {
     width: 100%;
     height: 220px;
     object-fit: cover;
 }
 
-/* Cuerpo de la tarjeta */
 .card-body {
     padding: 20px;
 }
@@ -76,7 +71,6 @@
     font-size: 1.3rem;
 }
 
-/* Estados / Badges */
 .badge-estado {
     padding: 4px 10px;
     font-size: 0.75rem;
@@ -91,7 +85,6 @@
 .badge-reservado { background: #f39c12; }
 .badge-adoptado { background: #e74c3c; }
 
-/* Textos informativos */
 .card-info-text {
     margin: 6px 0;
     font-size: 0.95rem;
@@ -108,7 +101,6 @@
     margin-top: 12px;
 }
 
-/* Botón Conocer */
 .btn-conocer {
     display: block;
     text-align: center;
@@ -126,11 +118,19 @@
     background: #2980b9;
 }
 
-/* Estado vacío */
 .empty-box {
     grid-column: 1 / -1;
     text-align: center;
     padding: 50px 20px;
     color: #94a3b8;
     font-size: 1.1rem;
+}
+
+@media (max-width: 480px) {
+    .catalogo-container h1 {
+        font-size: 1.8rem;
+    }
+    .grid-animales {
+        grid-template-columns: 1fr;
+    }
 }

@@ -4,6 +4,8 @@ import { ProtectorasComponent } from './components/protectoras/protectoras';
 import { LoginComponent } from './components/login/login';
 import { RegistroComponent } from './components/registro/registro';
 import { PerfilComponent } from './components/perfil/perfil';
+import { DetalleProtectorasComponent } from './components/detalle-protectoras/detalle-protectoras';
+import { FichaAnimalComponent } from './components/ficha-animal/ficha-animal';
 
 export const routes: Routes = [
   { path: '', component: PanelPrincipalComponent },
@@ -11,5 +13,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegistroComponent },
   { path: 'perfil', component: PerfilComponent },
-  { path: '**', redirectTo: '' } // Si ponen una ruta rara, vuelve al catálogo
+  { path: 'protectoras/:id', component: DetalleProtectorasComponent},
+  { path: 'animal/:id', component: FichaAnimalComponent },
+  { path: '**', redirectTo: '' }
 ];

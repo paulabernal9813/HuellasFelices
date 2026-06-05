@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsuariosServices } from '../../services/usuario-service';
+import { AnimalesServices } from '../../services/animal-service';
 
 @Component({
   selector: 'app-perfil',
@@ -13,84 +14,161 @@ import { UsuariosServices } from '../../services/usuario-service';
 })
 export class PerfilComponent implements OnInit {
   usuarioActual: any = null;
-  usuarioRespaldo: any = null; // Guardará una copia limpia por si cancelan la edición
-  editando: boolean = false;   // Controla si los inputs están bloqueados o no
-
+  usuarioRespaldo: any = null;
+  editando: boolean = false;
   errorMensaje: string = '';
   exitoMensaje: string = '';
 
+  misAnimales: any[] = [];
+  editandoAnimal: boolean = false; 
+
+  nuevoAnimal: any = {
+    id: null,
+    nombre: '',
+    especie: 'Perro',
+    raza: '',
+    edad: '',
+    tamano: 'Mediano',
+    estado: 'disponible',
+    descripcion: '',
+    imagen_url: ''
+  };
+
   constructor(
     private servicioUsuarios: UsuariosServices,
+    private servicioAnimales: AnimalesServices,
     private router: Router,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     const user = this.servicioUsuarios.getUsuarioActual();
     if (user) {
       this.usuarioActual = { ...user };
-      this.usuarioActual.password = ''; // Dejamos la contraseña visualmente vacía por seguridad
+      this.usuarioActual.password = '';
+
+      if (this.usuarioActual.rol === 'protectora') {
+        this.cargarMisAnimales();
+      }
     } else {
       this.router.navigate(['/']);
     }
   }
 
-  // Activa el modo edición y guarda una copia por si cancela
-  onActivarEdicion(): void {
+  // --- MÉTODOS DEL USUARIO ---
+  onActivarEdicion() {
     this.editando = true;
-    this.usuarioRespaldo = { ...this.usuarioActual }; // Hacemos copia de seguridad
-    this.errorMensaje = '';
-    this.exitoMensaje = '';
+    this.usuarioRespaldo = { ...this.usuarioActual };
   }
 
-  // Restaura los datos originales y vuelve al modo lectura
-  onCancelar(): void {
-    this.usuarioActual = { ...this.usuarioRespaldo }; // Recuperamos el respaldo
+  onCancelar() {
+    this.usuarioActual = { ...this.usuarioRespaldo };
     this.editando = false;
     this.errorMensaje = '';
+    this.exitoMensaje = '';
   }
 
-  onGuardarCambios(): void {
+  onGuardarCambios() {
     this.errorMensaje = '';
     this.exitoMensaje = '';
 
-    if (!this.usuarioActual.nombre || !this.usuarioActual.email) {
-      this.errorMensaje = '⚠️ El nombre y el correo electrónico son obligatorios.';
-      return;
-    }
-
     this.servicioUsuarios.modificarUsuario(this.usuarioActual).subscribe({
-      next: (res) => {
-        if (res && res.error) {
-          this.errorMensaje = '❌ ' + res.error;
-        } else {
-          this.exitoMensaje = '💾 ¡Datos actualizados con éxito!';
-          this.editando = false; // Volvemos al modo lectura automáticamente
-          
-          // Guardamos en la sesión local (si no cambió password, mantenemos la que tenía)
-          localStorage.setItem('usuario_logueado', JSON.stringify(this.usuarioActual));
+      next: (res: any) => {
+        if (res && res.result === 'OK') {
+          this.exitoMensaje = '💾 ¡Datos de tu cuenta actualizados con éxito!';
+          this.editando = false;
+
+          const datosGuardar = { ...this.usuarioActual };
+          datosGuardar.password = '';
+          localStorage.setItem('usuario_logueado', JSON.stringify(datosGuardar));
+
           this.cdr.detectChanges();
+        } else {
+          this.errorMensaje = '❌ No se pudieron guardar los cambios.';
         }
       },
-      error: (err) => {
-        console.error('Error al modificar:', err);
-        this.errorMensaje = '💥 Error al conectar con el servidor XAMPP.';
+      error: () => {
+        this.errorMensaje = '❌ Error de red al intentar actualizar el perfil.';
       }
     });
   }
 
-  onEliminarCuenta(): void {
-    const confirmar = confirm('⚠️ ¿Estás seguro de eliminar tu cuenta? Esta acción borrará tus datos y es irreversible.');
-    if (confirmar && this.usuarioActual.id) {
+  onEliminarCuenta() {
+    if (confirm('⚠️ ¿Estás seguro de que deseas borrar tu cuenta de forma permanente?')) {
       this.servicioUsuarios.eliminarUsuario(this.usuarioActual.id).subscribe({
-        next: () => {
-          alert('Cuenta eliminada con éxito. 👋');
-          this.servicioUsuarios.logout();
-          this.router.navigate(['/']);
+        next: (res: any) => {
+          if (res && res.result === 'OK') {
+            alert('Cuenta eliminada correctamente. ¡Hasta pronto! 👋');
+            this.servicioUsuarios.logout();
+            this.router.navigate(['/']);
+          } else if (res && res.result === 'HAS_ANIMALS') {
+            alert('❌ No puedes eliminar la cuenta: Tienes animales publicados en adopción. Debes quitarlos primero.');
+          } else {
+            alert('❌ Error: No se pudo eliminar la cuenta en este momento.');
+          }
         },
-        error: (err) => {
-          console.error('Error al borrar la cuenta:', err);
-          alert('💥 Error al intentar eliminar la cuenta del servidor XAMPP.');
+        error: () => {
+          alert('❌ Ocurrió un error de comunicación con el servidor.');
+        }
+      });
+    }
+  }
+
+  cargarMisAnimales() {
+    this.servicioAnimales.listarAnimalesProtectora(this.usuarioActual.id).subscribe({
+      next: (res) => {
+        this.misAnimales = res;
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  onNuevoAnimal() {
+    this.editandoAnimal = true;
+    this.nuevoAnimal = { id: null, usuario_id: this.usuarioActual.id, nombre: '', especie: 'Perro', raza: '', edad: '', tamano: 'Mediano', estado: 'disponible', descripcion: '', imagen_url: '' };
+  }
+
+  onEditarAnimal(animal: any) {
+    this.editandoAnimal = true;
+    this.nuevoAnimal = { ...animal };
+  }
+
+  onCancelarAnimal() {
+    this.editandoAnimal = false;
+  }
+
+  onGuardarAnimal() {
+    if (!this.nuevoAnimal.nombre || !this.nuevoAnimal.raza) {
+      alert('⚠️ Nombre y Raza son obligatorios.');
+      return;
+    }
+
+    if (this.nuevoAnimal.id === null) {
+      this.servicioAnimales.altaAnimal(this.nuevoAnimal).subscribe({
+        next: () => {
+          this.editandoAnimal = false;
+          this.cargarMisAnimales(); // Recargamos la lista
+          alert('🎉 ¡Animal publicado con éxito!');
+        }
+      });
+    } else {
+
+      this.servicioAnimales.modificaAnimal(this.nuevoAnimal).subscribe({
+        next: () => {
+          this.editandoAnimal = false;
+          this.cargarMisAnimales();
+          alert('💾 ¡Cambios del animal guardados!');
+        }
+      });
+    }
+  }
+
+  onBorrarAnimal(id: number) {
+    if (confirm('❌ ¿Estás seguro de que quieres retirar a este animal de la adopción?')) {
+      this.servicioAnimales.borraAnimal(id).subscribe({
+        next: () => {
+          this.cargarMisAnimales();
+          alert('Animal eliminado correctamente.');
         }
       });
     }

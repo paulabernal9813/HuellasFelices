@@ -1,22 +1,18 @@
 <nav class="navbar">
   <div class="nav-container">
-    <!-- Logo e Inicio -->
     <a routerLink="/" class="logo">
       <img src="logo-protectora.png" alt="Logo" class="logo-img">
       <span>Huellas Felices</span>
     </a>
 
-    <!-- Menú Derecho Dinámico -->
     <ul class="nav-links">
       <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Adopciones</a></li>
       <li><a routerLink="/protectoras">Protectoras</a></li>
       
-      <!-- Si NO está logueado -->
       @if (!isLoggedIn()) {
         <li><a routerLink="/login" class="btn-login">Iniciar Sesión</a></li>
         <li><a routerLink="/registro" class="btn-registro">Registrarse</a></li>
       } 
-      <!-- Si SÍ está logueado -->
       @else {
         <li><a routerLink="/perfil" class="btn-perfil">Mi Perfil ({{ usuarioLogueado?.nombre }})</a></li>
         <li><button (click)="logout()" class="btn-logout">Cerrar Sesión</button></li>
