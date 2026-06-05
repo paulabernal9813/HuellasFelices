@@ -6,27 +6,31 @@ class Modelo {
 
 	public function __CONSTRUCT() {
 		try {
-			// Datos de tu Render
-			$host = 'dpg-d8hk9hrtqb8s73a6e0f0-a.frankfurt-postgres.render.com';
-			$port = '5432';
-			$dbname = 'protectora_db_rtqf';
-			$user = 'protectora_db_rtqf_user';
-			$password = '0x1lTr4bzucMnkO75jMhW8PyYTGD2gW7'; 
-
-			// Opciones para obligar a PDO a usar conexión SSL (Como hicimos en DBeaver)
-			$options = array(
-				PDO:: Larconex => array(
-					"sslmode" => "require"
-				)
-			);
-
-			// Cadena PDO específica para PostgreSQL con las opciones SSL incluidas al final
-			$conexion = new PDO("pgsql:host=$host;port=$port;dbname=$dbname;sslmode=require", $user, $password);
+			// Si Render nos da la URL interna, la usamos directamente
+			$dbUrl = getenv('DATABASE_URL');
 			
-			// Asignamos la conexión a la variable de la clase
-			$this->pdo = $conexion;
+			if ($dbUrl) {
+				// Parseamos la URL automática de Render
+				$url = parse_url($dbUrl);
+				$host = $url["host"];
+				$port = $url["port"] ?? "5432";
+				$user = $url["user"];
+				$password = $url["pass"];
+				$dbname = ltrim($url["path"], '/');
+				
+				// Al ser interna, no exige SSL público
+				$this->pdo = new PDO("pgsql:host=$host;port=$port;dbname=$dbname", $user, $password);
+			} else {
+				// Tu configuración manual por si acaso
+				$host = 'dpg-d8hk9hrtqb8s73a6e0f0-a.frankfurt-postgres.render.com';
+				$port = '5432';
+				$dbname = 'protectora_db_rtqf';
+				$user = 'protectora_db_rtqf_user';
+				$password = '0x1lTr4bzucMnkO75jMhW8PyYTGD2gW7'; 
+				
+				$this->pdo = new PDO("pgsql:host=$host;port=$port;dbname=$dbname;sslmode=require", $user, $password);
+			}
 			
-			// Activamos el control de excepciones de PDO
 			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);                
 		} catch(Exception $e) {
 			die("Error de conexión: " . $e->getMessage());
