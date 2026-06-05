@@ -12,7 +12,7 @@ class Modelo {
 			$dbname = 'protectora_db_rtqf';
 			$user = 'protectora_db_rtqf_user';
 			// Aquí pon la contraseña larga que copiaste de Render (la que pusiste en DBeaver)
-			$password = '0x1lTr4bzucMnkO75jMhW8PyYTGD2gW7'; 
+			$password = 'Ivanmartin98'; 
 
 			// Cadena PDO específica para PostgreSQL con SSL obligatorio
 			$conexion = new PDO("pgsql:host=$host;port=$port;dbname=$dbname", $user, $password);
