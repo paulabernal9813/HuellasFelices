@@ -6,11 +6,21 @@ class Modelo {
 
 	public function __CONSTRUCT() {
 		try {
-			$opciones = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
-			$this->pdo = new PDO('mysql:host=127.0.0.1;dbname=protectora_db', 'root', '', $opciones);
+			// Datos de tu Render (sacados de la imagen de tu conexión)
+			$host = 'dpg-d8hk9hrtqb8s73a6e0f0-a.frankfurt-postgres.render.com';
+			$port = '5432';
+			$dbname = 'protectora_db_rtqf';
+			$user = 'protectora_db_rtqf_user';
+			// Aquí pon la contraseña larga que copiaste de Render (la que pusiste en DBeaver)
+			$password = 'TU_CONTRASEÑA_DE_RENDER'; 
+
+			// Cadena PDO específica para PostgreSQL con SSL obligatorio
+			$this->pdo = new PDO("pgsql:host=$host;port=$port;dbname=$dbname;sslmode=require", $user, $password);
+			
+			// Activamos el control de excepciones de PDO
 			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);                
 		} catch(Exception $e) {
-			die($e->getMessage());
+			die("Error de conexión: " . $e->getMessage());
 		}
 	}
 	
